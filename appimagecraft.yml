@@ -21,6 +21,16 @@ scripts:
   pre_build:
     - pushd "$BUILD_DIR"
     - |2
+      # unfortunately we need the Python environment before the build already, therefore we have to run the conda
+      # plugin manually before the build
+      wget https://github.com/linuxdeploy/linuxdeploy-plugin-conda/raw/master/linuxdeploy-plugin-conda.sh
+      # we need to skip the built-in cleanup as the build needs the development files (headers, libs, ...)
+      export CONDA_SKIP_CLEANUP=1
+      chmod +x linuxdeploy-plugin-conda.sh
+      ./linuxdeploy-plugin-conda.sh --appdir AppDir
+      . AppDir/usr/conda/bin/activate
+    - popd
+    - |2
       # we need a more recent version of libsigrok, and while we're at it, we can also build libserialport
       for i in libserialport libsigrok; do
           git clone git://sigrok.org/"$i"
@@ -33,16 +43,6 @@ scripts:
           make install
           popd
       done
-    - popd
-    - |2
-      # unfortunately we need the Python environment before the build already, therefore we have to run the conda
-      # plugin manually before the build
-      wget https://github.com/linuxdeploy/linuxdeploy-plugin-conda/raw/master/linuxdeploy-plugin-conda.sh
-      # we need to skip the built-in cleanup as the build needs the development files (headers, libs, ...)
-      export CONDA_SKIP_CLEANUP=1
-      chmod +x linuxdeploy-plugin-conda.sh
-      ./linuxdeploy-plugin-conda.sh --appdir AppDir
-      . AppDir/usr/conda/bin/activate
 
   post_build:
     - |2
