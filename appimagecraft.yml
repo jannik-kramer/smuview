@@ -46,6 +46,19 @@ scripts:
 
   post_build:
     - |2
+      # Cleanup conda, copied from linuxdeploy-plugin-conda.sh
+      pushd "$BUILD_DIR"/AppDir/usr/conda
+      rm -rf pkgs
+      find -type d -iname '__pycache__' -print0 | xargs -0 rm -r
+      find -type f -iname '*.so*' -print -exec strip '{}' \;
+      find -type f -iname '*.a' -print -delete
+      rm -rf lib/cmake/
+      rm -rf include/
+      rm -rf share/{gtk-,}doc
+      rm -rf share/man
+      rm -rf lib/python?.?/site-packages/{setuptools,pip}
+      popd
+    - |2
       cat > "$BUILD_DIR"/AppRun.sh <<\EOF
       #! /bin/bash
 
@@ -67,4 +80,4 @@ appimage:
       - qt
     extra_args: --custom-apprun "$BUILD_DIR"/AppRun.sh
     raw_environment:
-      - LD_LIBRARY_PATH="$BUILD_DIR"/AppDir/usr/conda/lib
+      - LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"$BUILD_DIR"/deps/lib:"$BUILD_DIR"/AppDir/usr/conda/lib
