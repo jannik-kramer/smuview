@@ -163,6 +163,14 @@ To debug the SmuView AppImage:
 Misc
 ====
 
+Install cmake from Kitware PPA
+ $ wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+ $ sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
+ $ sudo apt -y update
+ $ sudo apt -y install kitware-archive-keyring
+ $ sudo apt-key --keyring /etc/apt/trusted.gpg del C1F34CDD40CD72DA
+ $ sudo apt -y install cmake
+
 Build CMake. Probably some dependencies are missing!
  $ apt-get -y install openssl-dev libgl1-mesa-dev
  $ wget https://github.com/Kitware/CMake/releases/download/v3.13.3/cmake-3.13.3.tar.gz
