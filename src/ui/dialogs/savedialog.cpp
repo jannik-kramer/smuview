@@ -22,6 +22,7 @@
 #include <memory>
 #include <string>
 
+#include <QComboBox>
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
@@ -325,6 +326,18 @@ void SaveDialog::accept()
 	// Get file name
 	QString file_name = QFileDialog::getSaveFileName(this,
 		tr("Save CSV-File"), QDir::homePath(), tr("CSV Files (*.csv)"));
+
+	QFileDialog *dialog = new QFileDialog();
+	QComboBox *cb = new QComboBox;
+	cb->setEnabled(false);
+	//dialog->layout()->addWidget(cb);
+	if (dialog->exec() == QDialog::Accepted) {
+		QString selected_file = dialog->selectedFiles()[0];
+		QString cb_selection = cb->currentText();
+	}
+
+	QDialog::accept();
+	return;
 
 	if (file_name.length() > 0) {
 		if (timestamps_combined_->isChecked())
