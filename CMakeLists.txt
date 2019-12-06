@@ -434,7 +434,7 @@ target_link_libraries(${PROJECT_NAME} ${SMUVIEW_LINK_LIBS})
 
 if(WIN32 AND NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 	# Pass -mwindows so that no "DOS box" opens when SmuView is started.
-	set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-mwindows")
+	#set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-mwindows")
 endif()
 
 
