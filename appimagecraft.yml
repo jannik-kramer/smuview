@@ -57,10 +57,10 @@ scripts:
 
       # Load miniconda environment
       . "$APPDIR"/usr/conda/etc/profile.d/conda.sh
-      conda activate "$@"
+      conda activate
 
       # Run SmuView
-      exec "$APPDIR"/usr/bin/smuview
+      exec "$APPDIR"/usr/bin/smuview "$@"
       EOF
     - chmod +x "$BUILD_DIR"/AppRun.sh
 
