@@ -23,6 +23,7 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QMessageBox>
+#include <QStyle>
 #include <QToolButton>
 #include <QVBoxLayout>
 
@@ -261,6 +262,14 @@ void PlotView::setup_toolbar()
 		this, SLOT(on_action_config_plot_triggered()));
 
 	toolbar_ = new QToolBar("Plot Toolbar");
+	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
+	toolbar_->setIconSize(QSize(icon_size, icon_size));
+	//toolbar_->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	//toolbar_->setFloatable(false);
+	//toolbar_->setMovable(false);
+	//toolbar_->setContextMenuPolicy(Qt::PreventContextMenu);
+	toolbar_->layout()->setContentsMargins(0, 0, 0, 0);
+
 	toolbar_->addWidget(add_marker_button_);
 	toolbar_->addAction(action_add_diff_marker_);
 	toolbar_->addSeparator();
